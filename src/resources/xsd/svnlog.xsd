@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<!-- XML Schema for Subversion command-line client output. -->
+
+<!-- For "svn jaxb.log" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="svntypes.xsd"/>
+   <!-- jaxb.log: root element -->
+   <xs:element name="log" type="logType">
+     <!-- define revision is the unique key -->
+     <xs:key name="revKey">
+       <xs:selector xpath="./logentry"/>
+       <xs:field xpath="@revision"/>
+     </xs:key>
+     
+<!-- indicates relationship between revision and copyfrom-rev, will fail on partial logs -->
+<!-- <xs:keyref name="revRef" refer="revKey">
+       <xs:selector xpath="./logentry/paths/path"/>
+       <xs:field xpath="@copyfrom-rev"/>
+     </xs:keyref> -->
+   </xs:element>
+
+   <!-- logType: collection of jaxb.log entries -->
+   <xs:complexType name="logType">
+      <xs:sequence>
+         <xs:element name="logentry" type="logentryType" minOccurs="0" maxOccurs="unbounded"/>
+     </xs:sequence>
+  </xs:complexType>
+
+  <!-- logentryType: describes one revision -->
+  <xs:complexType name="logentryType">
+      <xs:sequence>
+         <xs:element name="author" type="authorType"/>
+         <xs:element name="date" type="dateType"/>
+	 <xs:element name="paths" type="pathsType" minOccurs="0"/>
+	 <xs:element name="msg" type="msgType" minOccurs="0" />
+     </xs:sequence>
+     <xs:attribute name="revision" type="revType" use="required"/> 
+  </xs:complexType>
+
+  <!-- pathsType: collection of path elements -->
+  <xs:complexType name="pathsType">
+     <xs:sequence>
+	     <xs:element name="path" type="pathActionType" minOccurs="0" maxOccurs="unbounded"/>
+     </xs:sequence>
+  </xs:complexType>
+ 
+  <!-- pathActionType: collection of path elements -->
+<!-- "copyfrom-path": the path within repository    -->
+<!-- "copyfrom-rev" : reference to the revision -->
+  <xs:complexType name="pathActionType">
+     <xs:simpleContent>
+	     <xs:extension base="xs:string">
+		     <xs:attribute name="action" type="actionType" use="required"/> 
+		     <xs:attribute name="copyfrom-path" type="pathType"/> 
+		     <xs:attribute name="copyfrom-rev" type="revType"/>
+	     </xs:extension>
+     </xs:simpleContent>
+  </xs:complexType>
+ 
+</xs:schema>

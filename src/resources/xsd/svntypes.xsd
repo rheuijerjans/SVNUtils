@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<!-- XML Schema for Subversion command-line client output. -->
+
+<!-- Shared, contains definition of base types -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ 
+  <!-- Basic types, will be extracted to svntypes.xsd -->
+  <!-- kindType: folder or file, string -->
+  <xs:simpleType name="kindType">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="dir"/>
+		<xs:enumeration value="file"/>
+	</xs:restriction>
+  </xs:simpleType>   
+    
+  <!-- nameType: folder/filename, string -->
+  <xs:simpleType name="nameType">
+     <xs:restriction base="xs:string"/>
+  </xs:simpleType>   
+    
+  <!-- authorType: committer, string -->
+  <xs:simpleType name="authorType">
+     <xs:restriction base="xs:string"/>
+  </xs:simpleType>      
+
+  <!-- dateType: date & time of the revision, dateTime -->
+  <xs:simpleType name="dateType">
+     <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>  
+
+  <!-- pathType: path; folder or file, string -->
+  <xs:simpleType name="pathType">
+     <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+   
+  <!-- revType: revision, integer -->
+  <xs:simpleType name="revType">
+     <xs:restriction base="xs:unsignedInt"/>
+  </xs:simpleType>
+  
+  <!-- lineNrType: revision, integer -->
+  <xs:simpleType name="lineNrType">
+	  <xs:restriction base="xs:unsignedInt"/>
+  </xs:simpleType>
+  
+  <!-- sizeType: size of file, integer -->
+  <xs:simpleType name="sizeType">
+	  <xs:restriction base="xs:unsignedInt"/>
+  </xs:simpleType>
+  
+  <!-- msgType: commit message, string -->
+  <xs:simpleType name="msgType">
+	  <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <!-- tokenType: lock token, string -->
+  <xs:simpleType name="tokenType">
+	  <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <!-- actionType: one character: A D M or R     -->
+  <xs:simpleType name="actionType">
+	  <xs:restriction base="xs:string">
+		  <xs:pattern value="[ADMR]"/>
+	  </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

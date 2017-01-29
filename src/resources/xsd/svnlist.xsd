@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<!-- XML Schema for Subversion command-line client output. -->
+
+<!-- For "svn list" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="svntypes.xsd"/>
+	
+   <!-- lists: root element --> 
+   <xs:element name="lists">
+	   <xs:complexType>
+	      <xs:sequence>
+	      	 <xs:element name="list" type="listType" maxOccurs="unbounded"/>
+	      </xs:sequence>
+	   </xs:complexType>   
+   </xs:element>
+     
+  <!-- listType: describes one revision -->
+  <xs:complexType name="listType">
+     <xs:sequence>
+        <xs:element name="entry" type="entryType" minOccurs="0" maxOccurs="unbounded"/>
+     </xs:sequence>
+     <xs:attribute name="path" type="pathType" use="required"/> 
+   </xs:complexType>
+
+  <!-- entryType: collection of list elements -->
+  <xs:complexType name="entryType">
+     <xs:sequence>
+         <xs:element name="name" type="nameType"/>
+	 <xs:element name="size" type="sizeType" minOccurs="0"/>
+         <xs:element name="commit" type="commitType"/>
+     </xs:sequence>
+     <xs:attribute name="kind" type="kindType" use="required"/>      
+  </xs:complexType>
+ 
+  <!-- commitType: collection of path elements -->
+  <xs:complexType name="commitType">
+     <xs:sequence>
+         <xs:element name="author" type="authorType"/>
+         <xs:element name="date" type="dateType"/>
+     </xs:sequence>
+     <xs:attribute name="revision" type="revType" use="required"/> 
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<!-- XML Schema for Subversion command-line client output. -->
+
+<!-- For "svn blame" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="svntypes.xsd"/>
+   <!-- blame: root element --> 
+   <xs:element name="blame">
+	   <xs:complexType>
+		   <xs:sequence>
+			   <xs:element name="target" type="targetType" minOccurs="0" maxOccurs="unbounded"/>
+		   </xs:sequence>
+	   </xs:complexType>   
+   </xs:element>
+   
+   <!-- targetType: collection of targets --> 
+   <xs:complexType name="targetType">
+      <xs:sequence>
+         <xs:element name="entry" type="blameEntryType" minOccurs="0" maxOccurs="unbounded"/>
+     </xs:sequence>
+     <xs:attribute name="path" type="pathType" use="required"/> 
+  </xs:complexType>
+
+  <!-- blameEntryType: describes one line in the target -->
+  <xs:complexType name="blameEntryType">
+      <xs:sequence>
+	      <xs:element name="commit" type="commitType" minOccurs="0"/>
+     </xs:sequence>
+     <xs:attribute name="line-number" type="lineNrType" use="required"/> 
+  </xs:complexType>
+
+  <!-- commitType:  info about last commit of the current line -->
+  <xs:complexType name="commitType">
+	  <xs:sequence>
+		  <xs:element name="author" type="authorType" minOccurs="0"/>
+		  <xs:element name="date" type="dateType" minOccurs="0"/>
+	  </xs:sequence>
+	  <xs:attribute name="revision" type="revType" use="required"/> 
+  </xs:complexType>
+</xs:schema>

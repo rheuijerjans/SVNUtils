@@ -1,0 +1,133 @@
+<?xml version="1.0" ?>
+<!-- XML Schema for Subversion command-line client output. -->
+
+<!-- For "svn status" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="svntypes.xsd"/>
+	
+   <!-- status: root element --> 
+   <xs:element name="status">
+	   <xs:complexType>
+		   <xs:sequence>
+			   <xs:element name="target" type="targetType" minOccurs="0" maxOccurs="unbounded"/>
+		   </xs:sequence>
+	   </xs:complexType>   
+   </xs:element>
+   
+   <!-- targetType: collection of targets --> 
+   <xs:complexType name="targetType">
+      <xs:sequence>
+	      <xs:element name="entry" type="statusEntryType" minOccurs="0" maxOccurs="unbounded"/>
+	      <xs:element name="against" type="againstType" minOccurs="0"/>
+     </xs:sequence>
+     <xs:attribute name="path" type="pathType" use="required"/> 
+  </xs:complexType>
+
+  <!-- statusEntryType: status of an item in wc -->
+  <xs:complexType name="statusEntryType">
+      <xs:sequence>
+	      <xs:element name="wc-status" type="wcStatusType"/>
+	      <xs:element name="repos-status" type="reposStatusType" minOccurs="0"/>
+     </xs:sequence>
+     <xs:attribute name="path" type="pathType" use="required"/> 
+  </xs:complexType>
+
+  <!-- wcStatusType: status of an item in the wc -->
+  <xs:complexType name="wcStatusType">
+	  <xs:sequence>
+		  <xs:element name="commit" type="commitType" minOccurs="0"/>
+		  <xs:element name="lock" type="lockType" minOccurs="0"/>
+	  </xs:sequence>
+	  <xs:attribute name="item" type="wcItemType" use="required"/> 
+	  <xs:attribute name="props" type="wcPropsType" use="required"/> 
+	  <xs:attribute name="revision" type="revType"/> 
+	  <xs:attribute name="wc-locked" type="xs:boolean"/> 
+	  <xs:attribute name="copied" type="xs:boolean"/> 
+	  <xs:attribute name="switched" type="xs:boolean"/> 
+  </xs:complexType>
+  
+  <!-- reposStatusType: status of an item in the repos -->
+  <xs:complexType name="reposStatusType">
+	  <xs:sequence>
+		  <xs:element name="lock" type="lockType" minOccurs="0"/>
+	  </xs:sequence>
+	  <xs:attribute name="item" type="reposItemType" use="required"/> 
+	  <xs:attribute name="props" type="reposPropsType" use="required"/> 
+  </xs:complexType>
+  
+  <!-- wcItemType: action on one item -->
+  <xs:simpleType name="wcItemType">
+	  <xs:restriction base="xs:string">
+		  <xs:enumeration value="added"/>
+		  <xs:enumeration value="conflicted"/>
+		  <xs:enumeration value="deleted"/>
+		  <xs:enumeration value="ignored"/>
+		  <xs:enumeration value="modified"/>
+		  <xs:enumeration value="replaced"/>
+		  <xs:enumeration value="external"/>
+		  <xs:enumeration value="unversioned"/>
+		  <xs:enumeration value="incomplete"/>
+		  <xs:enumeration value="obstructed"/>
+		  <xs:enumeration value="normal"/>
+		  <xs:enumeration value="none"/>
+	  </xs:restriction>
+  </xs:simpleType>   
+  
+  <!-- reposItemType: action on one item -->
+  <xs:simpleType name="reposItemType">
+	  <xs:restriction base="xs:string">
+		  <xs:enumeration value="added"/>
+		  <xs:enumeration value="deleted"/>
+		  <xs:enumeration value="modified"/>
+		  <xs:enumeration value="replaced"/>
+		  <xs:enumeration value="none"/>
+	  </xs:restriction>
+  </xs:simpleType> 
+  
+  <!-- wcPropsType: action on a property in wc -->
+  <xs:simpleType name="wcPropsType">
+	  <xs:restriction base="xs:string">
+		  <xs:enumeration value="conflicted"/>
+		  <xs:enumeration value="modified"/>
+		  <xs:enumeration value="normal"/>
+		  <xs:enumeration value="none"/>		  
+	  </xs:restriction>
+  </xs:simpleType>  
+  
+  <!-- reposPropsType: action on a property in the repos -->
+  <xs:simpleType name="reposPropsType">
+	  <xs:restriction base="xs:string">
+		  <xs:enumeration value="modified"/>
+		  <xs:enumeration value="none"/>		  
+	  </xs:restriction>
+  </xs:simpleType>
+  
+  <!-- commitType:  info about last commit of the current line -->
+  <xs:complexType name="commitType">
+	  <xs:sequence>
+		  <xs:element name="author" type="authorType" minOccurs="0"/>
+		  <xs:element name="date" type="dateType" minOccurs="0"/>
+	  </xs:sequence>
+	  <xs:attribute name="revision" type="revType" use="required"/> 
+  </xs:complexType>
+  
+  <!-- lockType:  info about a lock on the current line -->
+  <xs:complexType name="lockType">
+	  <xs:sequence>
+		  <xs:element name="token" type="tokenType"/>
+		  <xs:element name="owner" type="authorType"/>
+		  <xs:element name="comment" type="msgType" minOccurs="0"/>
+		  <xs:element name="created" type="dateType"/>
+		  <xs:element name="expires" type="dateType" minOccurs="0"/>		  
+	  </xs:sequence>
+  </xs:complexType>
+
+  <!-- againstType:  info about the revision against which the status was checked. -->
+  <xs:complexType name="againstType">
+	  <xs:simpleContent>
+		  <xs:extension base="xs:string">
+			  <xs:attribute name="revision" type="revType" use="required"/>
+		  </xs:extension>
+	  </xs:simpleContent>
+  </xs:complexType>  
+</xs:schema>

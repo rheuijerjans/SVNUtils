@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log>
+    <logentry revision="6">
+        <author>rick</author>
+        <date>2017-01-20T14:11:13.760075Z</date>
+        <msg>Test message 4</msg>
+    </logentry>
+    <logentry revision="5">
+        <author>rick</author>
+        <date>2017-01-20T13:11:13.760075Z</date>
+        <msg>Test message 4</msg>
+    </logentry>
+    <logentry revision="5">
+        <author>rick</author>
+        <date>2017-01-20T12:11:13.760075Z</date>
+        <msg>Test message 4</msg>
+    </logentry>
+    <logentry revision="4">
+        <author>rick</author>
+        <date>2017-01-19T12:11:13.760075Z</date>
+        <msg>Test message 4</msg>
+    </logentry>
+    <logentry revision="3">
+        <author>rick</author>
+        <date>2017-01-19T18:11:13.760075Z</date>
+        <msg>Test message 3</msg>
+    </logentry>
+    <logentry revision="2">
+        <author>rick</author>
+        <date>2017-01-14T18:11:13.760075Z</date>
+        <msg>Test message 2</msg>
+    </logentry>
+    <logentry revision="1">
+        <author>rick</author>
+        <date>2017-01-12T18:11:13.431762Z</date>
+        <msg>Test message 1</msg>
+    </logentry>
+</log>
